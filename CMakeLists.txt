@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION "3.12")
 project("sidemade")
 
+set(CMAKE_CXX_STANDARD 11)
 # Make cmake modules visible to CMake
 list (APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
@@ -32,3 +33,4 @@ target_link_libraries(testsidemade PRIVATE Boost::unit_test_framework Eigen3::Ei
 
 add_test(NAME "MatrixSolverTests" COMMAND ${CMAKE_CURRENT_BINARY_DIR}/testsidemade --run_test=MatrixSolverTests/*)
 add_test(NAME "ConfigurationTests" COMMAND ${CMAKE_CURRENT_BINARY_DIR}/testsidemade --run_test=ConfigurationTests/* WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/tests)
+add_test(NAME "MatrixIOTests" COMMAND ${CMAKE_CURRENT_BINARY_DIR}/testsidemade --run_test=MatrixIOTests/* WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/tests)
