@@ -30,3 +30,4 @@ BOOST_AUTO_TEST_CASE(openDataTest)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+//Test actions
