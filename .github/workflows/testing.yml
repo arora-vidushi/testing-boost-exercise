@@ -1,0 +1,36 @@
+on: [push]
+jobs:
+  style_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          python-version: '3.8'
+      - name: "Install clang-format"
+        run: sudo apt update && sudo apt install clang-format
+      - name: "Run clang-format for style check"
+        run: clang-format src/*.cpp src/*.hpp tests/*.cpp --dry-run -Werror
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Install necessary dependencies"
+        run: sudo apt update && sudo apt-get install cmake libyaml-cpp-dev libeigen3-dev libboost-test-dev
+      - name: "Run CMake"
+        run: mkdir build && cd build && cmake ..
+      - name: "Make"
+        run: cd build && make
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Install dependencies"
+        run: sudo apt update && sudo apt-get install cmake libyaml-cpp-dev libeigen3-dev libboost-test-dev
+      - name: "Run CMake"
+        run: mkdir build && cd build && cmake ..
+      - name: "Make"
+        run: cd build && make
+      - name: "Test"
+        run: cd build && make test
